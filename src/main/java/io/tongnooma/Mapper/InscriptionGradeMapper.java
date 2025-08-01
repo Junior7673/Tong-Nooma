@@ -7,7 +7,7 @@ import io.tongnooma.Persistance.UtilisateurJPAEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class IncriptionGradeMapper {
+public class InscriptionGradeMapper {
 
     /**Convertit une entité en DTO de réponse.*/
     public InscriptionGradeResponseDTO toDTO(InscriptionGradeJPAEntity entity) {

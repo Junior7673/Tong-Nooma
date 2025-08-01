@@ -17,6 +17,7 @@ public class UtilisateurMapper {
         dto.setPrenom(entity.getPrenom());
         dto.setEmail(entity.getEmail());
         dto.setTelephone(entity.getTelephone());
+        dto.setPassword(entity.getPassword());
         dto.setRole(entity.getRole());
         dto.setDateInscrip(entity.getDateInscrip());
         return dto;
