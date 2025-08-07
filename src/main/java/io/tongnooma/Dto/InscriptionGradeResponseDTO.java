@@ -3,7 +3,7 @@ package io.tongnooma.Dto;
 import io.tongnooma.Persistance.InscriptionGradeJPAEntity;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 public class InscriptionGradeResponseDTO {
@@ -18,13 +18,13 @@ public class InscriptionGradeResponseDTO {
 
     private String gradeActuel;
 
-    private String discipline;
+    private String nomClub;
 
-    private LocalDate dateSoumission;
+    private Date dateSoumission;
 
     private String photo;
 
     private InscriptionGradeJPAEntity.StatutEnum statut;
 
-    private String utilisateurNom; // pour affichage lisible
+    private Long utilisateurId; // pour affichage lisible
 }

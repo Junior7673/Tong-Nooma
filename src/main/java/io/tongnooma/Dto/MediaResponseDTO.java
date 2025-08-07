@@ -4,6 +4,7 @@ import io.tongnooma.Persistance.MediaJPAEntity;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 public class MediaResponseDTO {
@@ -17,5 +18,5 @@ public class MediaResponseDTO {
 
     private String description;
 
-    private LocalDate dateAjout;
+    private Date dateAjout;
 }

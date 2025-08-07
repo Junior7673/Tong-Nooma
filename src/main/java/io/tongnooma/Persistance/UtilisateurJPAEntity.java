@@ -3,7 +3,7 @@ package io.tongnooma.Persistance;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -28,7 +28,7 @@ public class UtilisateurJPAEntity {
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
-    private LocalDateTime dateInscrip;
+    private Date dateInscrip;
 
     @OneToOne(mappedBy = "utilisateur", cascade = CascadeType.ALL)
     private EnseignantJPAEntity enseignant;

@@ -19,7 +19,7 @@ public class ActualiteMapper {
         dto.setDatePub(entity.getDatePub());
 
         if (entity.getAuteur() != null) {
-            dto.setAuteurNom(entity.getAuteur().getNom() + " " + entity.getAuteur().getPrenom());
+            dto.setAuteurId(entity.getAuteur().getNom() + " " + entity.getAuteur().getPrenom());
         }
 
         return dto;

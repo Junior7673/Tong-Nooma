@@ -17,13 +17,13 @@ public class InscriptionGradeMapper {
         dto.setPrenom(entity.getPrenom());
         dto.setAge(entity.getAge());
         dto.setGradeActuel(entity.getGradeActuel());
-        dto.setDiscipline(entity.getDiscipline());
+        dto.setNomClub(entity.getNomClub());
         dto.setDateSoumission(entity.getDateSoumission());
         dto.setPhoto(entity.getPhoto());
         dto.setStatut(entity.getStatut());
 
         if (entity.getUtilisateur() != null) {
-            dto.setUtilisateurNom(entity.getUtilisateur().getNom());
+            dto.setUtilisateurId(entity.getUtilisateur().getId());
         }
 
         return dto;
@@ -37,7 +37,7 @@ public class InscriptionGradeMapper {
                 .prenom(dto.getPrenom())
                 .age(dto.getAge())
                 .gradeActuel(dto.getGradeActuel())
-                .discipline(dto.getDiscipline())
+                .nomClub(dto.getNomClub())
                 .dateSoumission(dto.getDateSoumission())
                 .photo(dto.getPhoto())
                 .statut(dto.getStatut())

@@ -6,4 +6,8 @@ public class RessourceIntrouvableException extends RuntimeException {
 
         super(message);
     }
+
+    public RessourceIntrouvableException(String resourceName, Long id) {
+        super(resourceName + " introuvable avec l'id : " + id);
+    }
 }

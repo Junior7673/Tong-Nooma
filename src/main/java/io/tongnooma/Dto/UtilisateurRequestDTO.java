@@ -3,7 +3,9 @@ package io.tongnooma.Dto;
 import io.tongnooma.Persistance.UtilisateurJPAEntity;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+
+import java.util.Date;
+
 @Data
 public class UtilisateurRequestDTO {
 
@@ -22,5 +24,5 @@ public class UtilisateurRequestDTO {
 
     private UtilisateurJPAEntity.RoleEnum role;
 
-    private LocalDateTime dateInscrip;
+    private Date dateInscrip;
 }

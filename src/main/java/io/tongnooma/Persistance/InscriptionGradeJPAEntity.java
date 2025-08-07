@@ -3,7 +3,7 @@ package io.tongnooma.Persistance;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 
 @Entity
@@ -21,8 +21,8 @@ public class InscriptionGradeJPAEntity {
     private String prenom;
     private int age;
     private String gradeActuel;
-    private String discipline;
-    private LocalDate dateSoumission;
+    private String nomClub;
+    private Date dateSoumission;
     private String photo;
 
     @Enumerated(EnumType.STRING)

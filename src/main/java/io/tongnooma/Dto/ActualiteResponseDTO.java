@@ -18,5 +18,5 @@ public class ActualiteResponseDTO {
 
     private LocalDateTime datePub;
 
-    private String auteurNom; // lisible pour l'affichage
+    private String auteurId; // lisible pour l'affichage
 }

@@ -3,7 +3,8 @@ package io.tongnooma.Dto;
 import io.tongnooma.Persistance.InscriptionGradeJPAEntity;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.util.Date;
+
 @Data
 public class InscriptionGradeRequestDTO {
     /** DTO pour soumettre ou modifier une demande de passage de grade.*/
@@ -17,9 +18,9 @@ public class InscriptionGradeRequestDTO {
 
     private String gradeActuel;
 
-    private String discipline;
+    private String nomClub;
 
-    private LocalDate dateSoumission;
+    private Date dateSoumission;
 
     private String photo;
 

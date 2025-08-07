@@ -3,7 +3,8 @@ package io.tongnooma.Persistance;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+
+import java.util.Date;
 
 @Entity
 @NoArgsConstructor
@@ -21,7 +22,7 @@ public class MediaJPAEntity {
 
     private String url;
     private String description;
-    private LocalDate dateAjout;
+    private Date dateAjout;
 
     public enum MediaTypeEnum{
         PHOTO,

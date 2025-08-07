@@ -16,8 +16,10 @@ public class HoraireCoursJPAEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Enumerated(EnumType.STRING)
     private DayOfWeek jour;
+
     private LocalTime heureDebut;
     private LocalTime heureFin;
     private String lieu;
