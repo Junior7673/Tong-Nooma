@@ -12,6 +12,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/horaires")
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class HoraireCoursController {
 
     private final HoraireCoursServiceInterface horaireService;

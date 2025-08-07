@@ -12,6 +12,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/inscriptions")
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class InscriptionGradeController {
 
     private final InscriptionGradeServiceInterface service;

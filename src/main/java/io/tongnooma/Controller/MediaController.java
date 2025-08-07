@@ -12,6 +12,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/media")
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class MediaController {
 
     private final MediaServiceInterface service;
