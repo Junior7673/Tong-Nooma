@@ -2,7 +2,10 @@ package io.tongnooma.Persistance;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +16,7 @@ import java.util.List;
 @Builder
 @Table(name="utilisateur")
 
-public class UtilisateurJPAEntity {
+public class UtilisateurJPAEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +41,7 @@ public class UtilisateurJPAEntity {
 
     @OneToMany(mappedBy = "utilisateur")
     private List<InscriptionGradeJPAEntity> inscription;
+
 
     public enum RoleEnum{
         ADMIN,
