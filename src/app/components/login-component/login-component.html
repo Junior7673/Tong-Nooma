@@ -1,0 +1,72 @@
+
+<!--
+<div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+  <div class="relative py-3 sm:max-w-xl sm:mx-auto">
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-sky-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
+    </div>
+    <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+
+      <div class="max-w-md mx-auto">
+        <div>
+          <h1 class="text-2xl font-semibold">Connexion</h1>
+        </div>
+        <form *ngIf="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="divide-y divide-gray-200">
+          <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+            <div class="relative">
+              <input autocomplete="off" id="email" formControlName="email" type="email" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" />
+              <label for="email" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">email</label>
+              <div *ngIf="errorMessage" class="text-red-600 mb-2">
+                  {{ errorMessage }}
+              </div>
+
+            </div>
+            <div class="relative">
+              <input autocomplete="off" id="password" formControlName="password" type="password" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600" aria-label="Mot de Passe"/>
+              <label for="password" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Mot De Passe</label>
+            </div>
+            <div class="relative">
+                <button type="submit" [disabled]="isLoading" class="bg-cyan-500 text-white rounded-md px-2 py-1 cursor-pointer">
+                  {{ isLoading ? 'Connexion...' : 'Envoyé' }}
+                </button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+-->
+     <!-- <div class="text-center mt-4">
+        <a routerLink="/register" class="bg-cyan-500 text-white rounded-md px-2 py-1 cursor-pointer">Créer un compte</a>
+      </div>-->
+
+<!--
+    </div>
+  </div>
+</div>
+-->
+<div class="container">
+  <div class="background-layer"></div>
+  <div class="login-card">
+    <h1>Connexion</h1>
+
+    <form *ngIf="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" />
+
+      <label for="password">Mot de passe</label>
+      <input id="password" type="password" formControlName="password" />
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" [disabled]="isLoading || loginForm.invalid">
+        {{ isLoading ? 'Connexion...' : 'Se connecter' }}
+      </button>
+    </form>
+  </div>
+</div>
+
+      <div class="text-center mt-4">
+        <a routerLink="/register" class="bg-cyan-500 text-white rounded-md px-2 py-1 cursor-pointer">Créer un compte</a>
+      </div>
