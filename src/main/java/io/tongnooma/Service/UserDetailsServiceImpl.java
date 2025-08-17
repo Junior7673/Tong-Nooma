@@ -15,7 +15,9 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
     @Override
     public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UtilisateurJPAEntity utilisateur = utilisateurRepo.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Email introuvable : " + email));
+                //.orElseThrow(() -> new UsernameNotFoundException("Email introuvable : " + email));
+                .orElseThrow(() -> new UsernameNotFoundException("Aucun utilisateur trouvé avec l’e-mail : " + email));
+
         return new CustomUserDetails(utilisateur);
     }
 }
