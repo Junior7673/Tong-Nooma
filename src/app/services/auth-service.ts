@@ -18,12 +18,21 @@ export class AuthService {
 
   login(credentials: LoginInterface): Observable<LoginResponse>{
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
-      tap(response =>{
+      /**tap(response =>{
         if (isPlatformBrowser(this.platformId)) {
           localStorage.setItem('token', response.token);
           localStorage.setItem('role', response.role);
         }
-      }),
+      }),*/
+      tap(response => {
+  if (isPlatformBrowser(this.platformId)) {
+    localStorage.setItem('token', response.token);
+    if (response.role) {
+      localStorage.setItem('role', response.role);
+    }
+  }
+}),
+
       catchError(err => throwError(() => err))
     );
   }

@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
 import { LoginInterface } from '../../interfaces/LoginInterface';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-component',

@@ -1,0 +1,152 @@
+/* ===== Conteneur principal ===== */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+}
+
+/* ===== Carte du formulaire ===== */
+.register-card {
+  background: #fff;
+  padding: 2rem;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.register-card h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #0ea5e9;
+}
+
+/* ===== Groupes de champs ===== */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+label {
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+/* ===== Champs de saisie ===== */
+input {
+  padding: 0.6rem;
+  border: 2px solid #d1d5db; /* ✅ Bordure renforcée */
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #fff;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+input:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+  outline: none;
+}
+
+input.invalid {
+  border-color: #ef4444;
+}
+
+/* ===== Message d'erreur ===== */
+.error {
+  font-size: 0.85rem;
+  color: #ef4444;
+  margin-top: 0.2rem;
+}
+
+/* ===== Messages globaux ===== */
+.message {
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.message.success {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.message.error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* ===== Bouton ===== */
+button {
+  width: 100%;
+  padding: 0.8rem;
+  background: #0ea5e9;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background: #0284c7;
+}
+
+/* ===== Lien du bas ===== */
+.switch-link {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.switch-link a {
+  color: #0ea5e9;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.switch-link a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+  .register-card {
+    padding: 1.2rem;
+  }
+}
+
+/* ===== Champ mot de passe avec icône ===== */
+.password-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.password-wrapper input {
+  flex: 1;
+  padding-right: 2.5rem; /* espace réservé à l’icône */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: #6b7280;
+  transition: color 0.2s ease-in-out;
+}
+
