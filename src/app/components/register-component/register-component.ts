@@ -6,7 +6,6 @@ import { AuthService } from '../../services/auth-service';
 import { noSpecialCharactersValidator } from '../../MesRestriction/noSpecialCharactersValidator';
 import { flexibleEmailValidator } from '../../MesRestriction/flexibleEmailValidator';
 import { passwordStrengthValidator } from '../../MesRestriction/passwordStrengthValidator';
-import { dateValidator } from '../../MesRestriction/dateValidator';
 import { telephoneValidator } from '../../MesRestriction/telephoneValidator';
 
 @Component({

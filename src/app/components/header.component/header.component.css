@@ -1,0 +1,101 @@
+/* ===== HEADER (Block) ===== */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #142850;
+  padding: 10px 40px;
+  position: relative;
+}
+
+.header__logo {
+  font-size: 24px;
+  color: white;
+}
+
+/* ===== MENU (Element) ===== */
+.header__menu {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.header__menu-item a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.header__menu-item a:hover {
+  color: #cccccc;
+}
+
+/* ===== BOUTON CONNEXION ===== */
+.header__login-btn {
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  padding: 6px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.3s;
+}
+
+.header__login-btn:hover {
+  background-color: white;
+  color: #142850;
+}
+
+/* Desktop uniquement */
+.header__login-btn--desktop {
+  display: inline-block;
+}
+
+/* Mobile uniquement */
+.header__menu-item--mobile {
+  display: none;
+}
+
+/* ===== HAMBURGER ===== */
+.header__hamburger {
+  display: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+}
+
+/* ===== RESPONSIVE MOBILE ===== */
+@media (max-width: 768px) {
+  .header__menu {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background-color: #142850;
+    display: none;
+    padding: 20px 0;
+    text-align: center;
+  }
+
+  .header__menu--active {
+    display: flex;
+  }
+
+  .header__hamburger {
+    display: block;
+  }
+
+  .header__login-btn--desktop {
+    display: none;
+  }
+
+  .header__menu-item--mobile {
+    display: block;
+    margin-top: 15px;
+  }
+}

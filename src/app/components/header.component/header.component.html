@@ -1,0 +1,30 @@
+<nav class="header">
+  <!-- Logo -->
+  <div class="header__logo">
+    <i class="fa-solid fa-graduation-cap"></i>
+  </div>
+
+  <!-- Bouton hamburger -->
+  <div class="header__hamburger" (click)="toggleMenu()">
+    <i class="fa-solid" [ngClass]="menuOpen ? 'fa-xmark' : 'fa-bars'"></i>
+  </div>
+
+  <!-- Menu principal -->
+  <ul class="header__menu" [ngClass]="{ 'header__menu--active': menuOpen }">
+    <li class="header__menu-item"><a href="#">À propos</a></li>
+    <li class="header__menu-item"><a href="#">Horaires</a></li>
+    <li class="header__menu-item"><a href="#">Galerie</a></li>
+
+    <!-- Bouton mobile : déconnexion -->
+    <li class="header__menu-item header__menu-item--mobile">
+      <div class="header__logout-btn" (click)="logout()">
+        Se déconnecter
+      </div>
+    </li>
+  </ul>
+
+  <!-- Bouton desktop : déconnexion -->
+  <div class="header__logout-btn header__logout-btn--desktop" (click)="logout()">
+    Se déconnecter
+  </div>
+</nav>
