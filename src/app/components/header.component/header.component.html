@@ -11,20 +11,21 @@
 
   <!-- Menu principal -->
   <ul class="header__menu" [ngClass]="{ 'header__menu--active': menuOpen }">
-    <li class="header__menu-item"><a href="#">À propos</a></li>
+    <li class="header__menu-item"><a href="#">Actualité</a></li>
     <li class="header__menu-item"><a href="#">Horaires</a></li>
     <li class="header__menu-item"><a href="#">Galerie</a></li>
+    <li class="header__menu-item"><a href="#">À propos</a></li>
 
     <!-- Bouton mobile : déconnexion -->
-    <li class="header__menu-item header__menu-item--mobile">
+    <li *ngIf="isLoggedIn" class="header__menu-item header__menu-item--mobile">
       <div class="header__logout-btn" (click)="logout()">
-        Se déconnecter
+        <i class="fa-solid fa-right-from-bracket"></i> Se déconnecter
       </div>
     </li>
   </ul>
 
   <!-- Bouton desktop : déconnexion -->
-  <div class="header__logout-btn header__logout-btn--desktop" (click)="logout()">
-    Se déconnecter
+  <div *ngIf="isLoggedIn" class="header__logout-btn header__logout-btn--desktop" (click)="logout()">
+    <i class="fa-solid fa-right-from-bracket"></i> Se déconnecter
   </div>
 </nav>

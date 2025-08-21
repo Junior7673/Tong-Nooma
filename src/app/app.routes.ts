@@ -4,11 +4,11 @@ import { nolayRoutes } from './components/nolay-routing';
 
 export const routes: Routes = [
 
-    /**{
+    {
         path: 'login',
         //canActivate: [AuthGuard],
         loadComponent: () => import('./components/login-component/login-component').then(m => m.LoginComponent)    
-    },*/
+    },
 
     {
         path: 'register',
@@ -16,15 +16,15 @@ export const routes: Routes = [
     },
 
     {
-        path: 'header',
+        path: '',
         canActivate: [AuthGuard],
         loadComponent: () => import('./components/header.component/header.component').then(m => m.HeaderComponent)
     },
 
-    {
+    /**{
         path: 'nolay/login',
         loadComponent: () => import('./components/login-component/login-component').then(m => m.LoginComponent)
-    }
+    },*/
 
     {
   path: 'nolay',

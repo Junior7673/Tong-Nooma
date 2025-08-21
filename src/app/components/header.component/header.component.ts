@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
 
@@ -13,22 +13,32 @@ import { AuthService } from '../../services/auth-service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   menuOpen = false;
+  isLoggedIn = false;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
-  // ✅ Toggle du menu responsive
+  ngOnInit(): void {
+    this.isLoggedIn = this.authService.isAuthenticated();
+  }
+
   toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
   }
 
-  // ✅ Déconnexion gouvernée
   logout(): void {
-    this.authService.logout(); // méthode à implémenter dans AuthService
-    this.router.navigate(['/login']); // redirection vers la route login
+    if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
+      this.authService.logout();
+      this.isLoggedIn = false;
+      this.cdr.detectChanges();
+      setTimeout(() =>{
+      this.router.navigate(['/login']);
+    }, 0)
   }
+}
 }
