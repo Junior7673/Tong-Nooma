@@ -51,8 +51,8 @@
 
 .header__login-btn:hover,
 .header__logout-btn:hover {
-  background-color: white;
-  color: #142850;
+  background-color: rgb(251, 5, 5);
+  color: #cbd7f0;
 }
 
 /* Desktop uniquement */
@@ -60,6 +60,8 @@
 .header__logout-btn--desktop {
   display: inline-block;
   margin-left: 20px;
+  background-color: red;
+
 }
 
 /* Mobile uniquement */
@@ -97,7 +99,6 @@
     display: block;
   }
 
-  .header__login-btn--desktop,
   .header__logout-btn--desktop {
     display: none;
   }
@@ -105,5 +106,6 @@
   .header__menu-item--mobile {
     display: block;
     margin-top: 15px;
+
   }
 }
