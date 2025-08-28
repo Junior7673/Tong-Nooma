@@ -1,0 +1,27 @@
+<div class="utilisateur-container">
+  <h2>Gestion des utilisateurs</h2>
+
+  <form *ngIf="selectedUser" (ngSubmit)="saveUser()">
+    <input [(ngModel)]="selectedUser.nom" name="nom" placeholder="Nom" required />
+    <input [(ngModel)]="selectedUser.prenom" name="prenom" placeholder="Prénom" required />
+    <input [(ngModel)]="selectedUser.email" name="email" placeholder="Email" required />
+    <input [(ngModel)]="selectedUser.telephone" name="telephone" placeholder="Téléphone" />
+    <input [(ngModel)]="selectedUser.password" name="password" placeholder="Mot de passe" type="password" />
+    <select [(ngModel)]="selectedUser.role" name="role">
+      <option value="ADMIN">ADMIN</option>
+      <option value="UTILISATEUR">UTILISATEUR</option>
+    </select>
+    <button type="submit">Enregistrer</button>
+    <button type="button" (click)="selectedUser = undefined">Annuler</button>
+  </form>
+<!--
+  <button (click)="selectedUser = {}">Créer un nouvel utilisateur</button>
+-->
+  <ul>
+    <li *ngFor="let u of utilisateurs">
+      {{ u.nom }} {{ u.prenom }} - {{ u.email }}
+      <button (click)="selectUser(u)">Modifier</button>
+      <button (click)="deleteUser(u.id!)">Supprimer</button>
+    </li>
+  </ul>
+</div>

@@ -1,31 +1,117 @@
 <nav class="header">
   <!-- Logo -->
-  <div class="header__logo">
-    <i class="fa-solid fa-graduation-cap"></i>
+<div class="header__logo" routerLink="/">
+  <img src="/assets/dragon.jpg" alt="Logo Tong Nooma" class="logo-full" />
+</div>
+
+
+
+  <!-- Cloche de notification -->
+  <div class="header__notifications" (click)="openNotifications()">
+    <i class="fa-solid fa-bell"></i>
+    <span *ngIf="unreadCount > 0" class="notif-badge">{{ unreadCount }}</span>
   </div>
 
-  <!-- Bouton hamburger -->
+  <!-- Bouton hamburger (mobile) -->
   <div class="header__hamburger" (click)="toggleMenu()">
     <i class="fa-solid" [ngClass]="menuOpen ? 'fa-xmark' : 'fa-bars'"></i>
   </div>
 
-  <!-- Menu principal -->
+  <!-- Menu -->
   <ul class="header__menu" [ngClass]="{ 'header__menu--active': menuOpen }">
-    <li class="header__menu-item"><a href="#">Actualité</a></li>
-    <li class="header__menu-item"><a href="#">Horaires</a></li>
-    <li class="header__menu-item"><a href="#">Galerie</a></li>
-    <li class="header__menu-item"><a href="#">À propos</a></li>
+    <li><a routerLink="/">Accueil</a></li>
+    <li><a routerLink="/news">Actualité</a></li>
+    <li><a routerLink="/gallery">Galerie</a></li>
+    <li><a routerLink="/programs">Programmes</a></li>
+    <li><a routerLink="/about">À propos</a></li>
+    <li><a routerLink="/contact">Contact</a></li>
 
-    <!-- Bouton mobile : déconnexion -->
-    <li *ngIf="isLoggedIn" class="header__menu-item header__menu-item--mobile">
-      <div class="header__logout-btn" (click)="logout()">
-        <i class="fa-solid fa-right-from-bracket"></i> Se déconnecter
-      </div>
+    <!-- Bouton déconnexion visible uniquement si connecté -->
+    <li *ngIf="isLoggedIn" class="header__logout" (click)="logout()">
+      <i class="fa-solid fa-right-from-bracket"></i> Se déconnecter
     </li>
   </ul>
-
-  <!-- Bouton desktop : déconnexion -->
-  <div *ngIf="isLoggedIn" class="header__logout-btn header__logout-btn--desktop" (click)="logout()">
-    <i class="fa-solid fa-right-from-bracket"></i> Se déconnecter
-  </div>
 </nav>
+
+
+<!--Hero-->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Bienvenue au Club Tong Nooma</h1>
+    <p>Amoureux du sport et des arts martiaux venez decouvrir
+      ce que c'est que le VOVINAM Viet Vo Dao.</p>
+<a href="https://www.facebook.com/share/19ndzFQJrg/?mibextid=wwXIfr" class="cta-btn" target="_blank" rel="noopener noreferrer">
+  rejoignez notre communauté
+  en cliquant ici
+</a>
+  </div>
+</section>
+
+<!--À Propos-->
+<section class="about">
+  <div class="about-wrapper">
+    <div class="about-img">
+      <img src="/assets/maitre.jpg" alt="Maître Tong Nooma">
+    </div>
+    <div class="about-text">
+      <h2>À propos</h2>
+      <p>
+        Tong Nooma est bien plus qu’une école d’arts martiaux. C’est une communauté où l’on apprend
+        le respect, la discipline et la maîtrise de soi à travers le VOVINAM Viet Vo Dao.
+        Nos cours sont ouverts à tous les niveaux, encadrés par des maîtres passionnés.
+      </p>
+      <a routerLink="/programs" class="cta-btn">Découvrir nos programmes</a>
+    </div>
+  </div>
+</section>
+
+
+<!--Actualite-->
+<section class="news">
+  <h2>Actualité</h2>
+  <div class="news-list">
+    <article>
+      <h3>Stage d'été</h3>
+      <p>Rejoignez-nous pour un stage intensif cet été...</p>
+    </article>
+  </div>
+</section>
+
+<!--Horaire-->
+<section class="programs">
+  <h2>Nos Programmes</h2>
+  <div class="program-list">
+    <div class="program-card">
+      <h3>Séance Enfants</h3>
+      <p>Mercredi 16h - 18h</p>
+      <p>Samedi 16h - 18h</p>
+
+    </div>
+    <div class="program-card">
+      <h3>Séance Adultes</h3>
+      <p>Lundi 18h30 - 20h</p>
+      <p>Mardi 18h - 20h</p>
+      <p>Jeudi 18h - 20h</p>
+      <p>Samedi 16h - 18h</p>
+    </div>
+  </div>
+</section>
+
+<!--Galerie-->
+<section class="gallery">
+  <h2>Galerie</h2>
+  <div class="gallery-grid">
+    <img src="/assets/images/photo1.jpg" alt="Cours">
+    <img src="/assets/images/photo2.jpg" alt="Entraînement">
+  </div>
+</section>
+
+<!--Contact-->
+<section class="contact">
+  <h2>Contact</h2>
+  
+</section>
+
+
+
+

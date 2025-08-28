@@ -1,111 +1,420 @@
-/* ===== HEADER (Block) ===== */
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  color: #264d9a;
+  line-height: 1.6;
+}
+
+/* ===== HEADER ===== */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #142850;
-  padding: 10px 40px;
-  position: relative;
+  background-color: #264d9a;
+  padding: 16px 32px;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 120px; /* ✅ hauteur fixe du header */
+  padding: 0 32px;
 }
 
 .header__logo {
-  font-size: 24px;
-  color: white;
-}
-
-/* ===== MENU (Element) ===== */
-.header__menu {
-  list-style: none;
-  display: flex;
-  gap: 30px;
-  margin: 0;
-  padding: 0;
-}
-
-.header__menu-item a {
-  text-decoration: none;
-  color: white;
-  font-size: 16px;
-  transition: color 0.3s;
-}
-
-.header__menu-item a:hover {
-  color: #cccccc;
-}
-
-/* ===== BOUTON CONNEXION ===== */
-.header__login-btn,
-.header__logout-btn {
-  border: 1px solid white;
-  background: transparent;
-  color: white;
-  padding: 6px 18px;
-  border-radius: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
   cursor: pointer;
-  font-size: 15px;
-  transition: all 0.3s;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 8px;
+  transition: opacity 0.3s ease;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+}
+.header__logo:hover {
+  opacity: 0.8;
 }
 
-.header__login-btn:hover,
-.header__logout-btn:hover {
-  background-color: rgb(251, 5, 5);
-  color: #cbd7f0;
+.logo-img {
+  height: 40px; 
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+.logo-text {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: white;
+}
+.logo-full {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.header__logo:hover .logo-full {
+  transform: scale(1.05);
+}
+.header__logo:hover .logo-img {
+  transform: scale(1.05);
 }
 
-/* Desktop uniquement */
-.header__login-btn--desktop,
-.header__logout-btn--desktop {
-  display: inline-block;
-  margin-left: 20px;
-  background-color: red;
-
+.header__notifications {
+  position: relative;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.header__notifications:hover {
+  transform: scale(1.1);
+}
+.notif-badge {
+  position: absolute;
+  top: -6px;
+  right: 10px;
+  background: red;
+  color: white;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 50%;
 }
 
-/* Mobile uniquement */
-.header__menu-item--mobile {
-  display: none;
+.header__menu {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+.header__menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.header__menu a:hover {
+  color: #ffcc00;
 }
 
 /* ===== HAMBURGER ===== */
 .header__hamburger {
   display: none;
-  font-size: 22px;
-  color: white;
   cursor: pointer;
+  font-size: 1.6rem;
+  color: white;
 }
 
-/* ===== RESPONSIVE MOBILE ===== */
+/* ===== RESPONSIVE MENU ===== */
 @media (max-width: 768px) {
   .header__menu {
-    position: absolute;
-    top: 60px;
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    background-color: #142850;
     display: none;
-    padding: 20px 0;
-    text-align: center;
+    flex-direction: column;
+    background: rgba(34, 69, 138, 0.7); /* fond semi-transparent */
+    backdrop-filter: blur(8px);        /* effet verre dépoli */
+    position: absolute;
+    top: 120px;
+    right: 0;
+    left: 0;
+    padding: 20px;
+    gap: 16px;
+    border-top: 1px solid rgba(255,255,255,0.1);
   }
-
   .header__menu--active {
     display: flex;
+    animation: fadeIn 0.3s ease;
   }
-
   .header__hamburger {
     display: block;
   }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  .header__logout-btn--desktop {
-    display: none;
-  }
+/* ===== LOGOUT BUTTON ===== */
+/* Bouton déconnexion dans le menu */
+.header__logout {
+  background-color: #e60000;
+  color: white;
+  padding: 6px 12px;   /* ✅ réduit la taille */
+  border-radius: 12px; /* arrondi plus petit */
+  font-weight: 500;    /* un peu moins gras */
+  font-size: 0.9rem;   /* texte plus petit */
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.3s ease;
+  max-width: fit-content; /* ✅ empêche de s’étaler */
+}
+.header__logout:hover {
+  background-color: #ff4d4d;
+}
 
-  .header__menu-item--mobile {
-    display: block;
-    margin-top: 15px;
 
-  }
+
+/* ===== HERO ===== */
+.hero {
+  position: relative;
+  background: url('/assets/logo2.png') center/contain no-repeat;
+  color: white;
+  text-align: center;
+  padding: 150px 30px;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 40, 80, 0.5);
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: auto;
+}
+.hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+}
+.hero p {
+  font-size: 1.25rem;
+  margin-bottom: 30px;
+}
+.cta-btn {
+  background-color: rgba(76, 89, 227, 0.3); /* bleu clair avec 30% d’opacité */
+  padding: 14px 28px;
+  border-radius: 30px;
+  text-decoration: none;
+  color: #ebecee;
+  font-weight: bold;
+  backdrop-filter: blur(4px); /* effet verre dépoli */
+  transition: background 0.3s ease, transform 0.2s ease;
+  border: 1px solid rgba(76, 89, 227, 0.5); /* contour léger */
+}
+.cta-btn:hover {
+  background-color: rgba(76, 89, 227, 0.5); /* un peu plus opaque au survol */
+  transform: translateY(-2px);
+}
+
+
+/* ===== SECTION STYLES ===== */
+section {
+  padding: 60px 20px;
+}
+section h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #142850;
+}
+/* ===== ABOUT ===== */
+.about {
+  background-color: #f0f4ff;
+  padding: 80px 20px;
+  position: relative;
+}
+
+.about-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.about-img {
+  flex: 1;
+  min-width: 400px;
+  max-width: 700px;
+
+}
+.about-img img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  object-fit: cover;
+}
+
+.about-text {
+  flex: 1;
+  min-width: 280px;
+  max-width: 600px;
+}
+.about-text h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: #142850;
+}
+.about-text p {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+.about-text .cta-btn {
+  background-color: rgba(76, 89, 227, 0.3);
+  color: #142850;
+  border: 1px solid rgba(76, 89, 227, 0.5);
+  padding: 12px 24px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  backdrop-filter: blur(4px);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.about-text .cta-btn:hover {
+  background-color: rgba(76, 89, 227, 0.5);
+  transform: translateY(-2px);
+}
+
+
+.about-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.about-img {
+  flex: 1;
+  min-width: 400px;
+  max-width: 800px;
+
+}
+.about-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  object-fit: cover;
+}
+
+.about-text {
+  flex: 1;
+  min-width: 280px;
+  max-width: 600px;
+}
+.about-text h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: #142850;
+}
+.about-text p {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+.about-text .cta-btn {
+  background-color: rgba(76, 89, 227, 0.3);
+  color: #142850;
+  border: 1px solid rgba(76, 89, 227, 0.5);
+  padding: 12px 24px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  backdrop-filter: blur(4px);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.about-text .cta-btn:hover {
+  background-color: rgba(76, 89, 227, 0.5);
+  transform: translateY(-2px);
+}
+
+/* ===== NEWS ===== */
+.news-list article {
+  max-width: 600px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+  border-left: 4px solid #142850;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* ===== PROGRAMS ===== */
+.program-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+.program-card {
+  background: #142850;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 250px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+.program-card:hover {
+  transform: scale(1.03);
+}
+
+/* ===== GALLERY ===== */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+.gallery-grid img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* ===== CONTACT ===== */
+.contact form {
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.contact input,
+.contact textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+.contact button {
+  background: #142850;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.contact button:hover {
+  background: #0e1f3a;
+}
+
+.header__logout {
+  background-color: #e60000; 
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.3s ease;
+}
+.header__logout:hover {
+  background-color: #ff4d4d; 
 }
