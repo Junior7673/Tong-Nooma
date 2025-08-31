@@ -14,22 +14,20 @@ export const routes: Routes = [
         path: 'register',
         loadComponent: ()=> import('./components/register-component/register-component').then(m => m.RegisterComponent)
     },
-
     {
-        path: '',
+    path: '', 
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./components/home-component/home-component').then(m => m.HomeComponent) 
+    },
+    {
+        path: 'news',
         canActivate: [AuthGuard],
-        loadComponent: () => import('./components/header.component/header.component').then(m => m.HeaderComponent)
+        loadComponent: () => import('./components/actualite.component/actualite.component').then(m=> m.ActualiteComponent)
     },
 
-    /**{
-        path: 'nolay/login',
-        loadComponent: () => import('./components/login-component/login-component').then(m => m.LoginComponent)
-    },*/
+    { path: 'nolay', children: nolayRoutes },
+    
 
-    {
-  path: 'nolay',
-  children: nolayRoutes
-}
 
 
 ];

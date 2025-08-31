@@ -12,35 +12,29 @@ export class AuthService {
   private apiUrl = 'http://localhost:8080/auth';
 
   constructor(private http: HttpClient,
-              @Inject(PLATFORM_ID) private platformId: Object){
+              @Inject(PLATFORM_ID) private platformId: Object) {}
 
-  }
-
-  login(credentials: LoginInterface): Observable<LoginResponse>{
+  login(credentials: LoginInterface): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
-      /**tap(response =>{
+      tap(response => {
         if (isPlatformBrowser(this.platformId)) {
           localStorage.setItem('token', response.token);
-          localStorage.setItem('role', response.role);
+          if (response.role) {
+            localStorage.setItem('role', response.role);
+          }
+          if (response.expiresAt) {
+            localStorage.setItem('expiresAt', response.expiresAt.toString());
+          }
+          this.scheduleAutoLogout();
         }
-      }),*/
-      tap(response => {
-  if (isPlatformBrowser(this.platformId)) {
-    localStorage.setItem('token', response.token);
-    if (response.role) {
-      localStorage.setItem('role', response.role);
-    }
-  }
-}),
-
+      }),
       catchError(err => throwError(() => err))
     );
   }
-  
+
   register(newUser: LoginInterface): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, newUser).pipe(
-            catchError(err => throwError(() => err))
-
+      catchError(err => throwError(() => err))
     );
   }
 
@@ -48,21 +42,34 @@ export class AuthService {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('token');
       localStorage.removeItem('role');
+      localStorage.removeItem('expiresAt'); // ✅
     }
   }
 
-  isAuthenticated(): boolean{
-        return isPlatformBrowser(this.platformId) && !!localStorage.getItem('token');
-
+  isAuthenticated(): boolean {
+    if (!isPlatformBrowser(this.platformId)) return false;
+    const token = localStorage.getItem('token');
+    const expiresAt = localStorage.getItem('expiresAt');
+    if (!token || !expiresAt) return false;
+    return Date.now() < parseInt(expiresAt, 10);
   }
-   getUserRole(): string {
+
+  getUserRole(): string {
     return localStorage.getItem('role') ?? '';
   }
 
-
   isAdmin(): boolean {
     return this.getUserRole() === 'ADMIN';
-  } 
+  }
 
-  
+  private scheduleAutoLogout() {
+    const expiresAt = localStorage.getItem('expiresAt');
+    if (!expiresAt) return;
+    const timeout = parseInt(expiresAt, 10) - Date.now();
+    if (timeout > 0) {
+      setTimeout(() => this.logout(), timeout);
+    } else {
+      this.logout();
+    }
+  }
 }

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth-service';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -10,22 +11,34 @@ import { Router, RouterModule } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   menuOpen = false;
-  unreadCount = 3; // Exemple
+  unreadCount = 3;
   isLoggedIn = false;
+  showHeader = true;
 
-  constructor(private authService: AuthService,
-      private router: Router
-
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.isLoggedIn = this.authService.isAuthenticated(); // ou observable si tu veux le rendre réactif
+    // État initial
+    this.isLoggedIn = this.authService.isAuthenticated();
+
+    // Cacher le header sur certaines routes
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        const hiddenRoutes = ['/login', '/register'];
+        this.showHeader = !hiddenRoutes.includes(event.urlAfterRedirects);
+        this.isLoggedIn = this.authService.isAuthenticated();
+      });
   }
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenu() {
+    this.menuOpen = false;
   }
 
   openNotifications() {
@@ -37,7 +50,7 @@ export class HeaderComponent {
     if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
       this.authService.logout();
       this.isLoggedIn = false;
-     this.router.navigate(['/login']); // ✅ redirection forcée
+      this.router.navigate(['/login']);
     }
   }
 }

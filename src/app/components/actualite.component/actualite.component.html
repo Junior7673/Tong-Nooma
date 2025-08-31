@@ -1,1 +1,27 @@
-<p>actualite.component works!</p>
+<section class="actualites">
+  <h2 class="actualites__titre">Actualités</h2>
+
+  <!-- Loader -->
+  @if(isLoading){
+    <div *ngIf="isLoading" class="actualites__loader">
+      <span class="spinner"></span> Chargement...
+    </div>
+  }
+  <!-- Liste -->
+  <div class="actualites__liste" *ngIf="!isLoading && actualites.length > 0">
+    <article class="actualites__item" *ngFor="let actu of actualites">
+      <img *ngIf="actu.imageUrl" [src]="actu.imageUrl" alt="{{ actu.titre }}" class="actualites__image" />
+      <h3 class="actualites__sous-titre">{{ actu.titre }}</h3>
+      <p class="actualites__contenu">{{ actu.contenu }}</p>
+      <small class="actualites__meta">
+        Publié le {{ actu.datePub | date:'longDate' }}
+        <span *ngIf="actu.auteurId">par {{ actu.auteurId }}</span>
+      </small>
+    </article>
+  </div>
+
+  <!-- Message vide -->
+  <div *ngIf="!isLoading && actualites.length === 0" class="actualites__vide">
+    Aucune actualité disponible.
+  </div>
+</section>

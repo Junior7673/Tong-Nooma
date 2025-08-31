@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideHttpClient, withFetch  } from '@angular/common/http';
 import { provideServerRendering } from '@angular/ssr';
+import { ActualiteService } from './services/actualite-service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,6 +14,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes), 
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch()),
+    ActualiteService
         //provideServerRendering(),
 
   ]
