@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth-service';
 import { Router, RouterModule, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { filter, map } from 'rxjs/operators';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-header',
@@ -11,27 +12,26 @@ import { filter } from 'rxjs/operators';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
   menuOpen = false;
   unreadCount = 3;
-  isLoggedIn = false;
-  showHeader = true;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  // 🔥 Ici on ne garde que NavigationEnd et on map vers son urlAfterRedirects (string)
+  private navigationEnd$ = this.router.events.pipe(
+    filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+    map(event => event.urlAfterRedirects)
+  );
+  private currentUrl = toSignal(this.navigationEnd$, { initialValue: this.router.url });
 
-  ngOnInit() {
-    // État initial
-    this.isLoggedIn = this.authService.isAuthenticated();
+  showHeader = computed(() => {
+    const url = this.currentUrl() ?? '';
+    return !['/login', '/register'].some(path => url.startsWith(path));
+  });
 
-    // Cacher le header sur certaines routes
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        const hiddenRoutes = ['/login', '/register'];
-        this.showHeader = !hiddenRoutes.includes(event.urlAfterRedirects);
-        this.isLoggedIn = this.authService.isAuthenticated();
-      });
-  }
+  isLoggedIn = computed(() => this.authService.isAuthenticated());
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
@@ -49,7 +49,6 @@ export class HeaderComponent implements OnInit {
   logout() {
     if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
       this.authService.logout();
-      this.isLoggedIn = false;
       this.router.navigate(['/login']);
     }
   }

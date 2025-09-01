@@ -1,4 +1,4 @@
-<nav class="header" *ngIf="showHeader">
+<nav class="header" *ngIf="showHeader()">
   <!-- Logo -->
   <div class="header__logo" routerLink="/" (click)="closeMenu()">
     <img src="/assets/dragon.jpg" alt="Logo du Club Tong Nooma" class="logo-full" />
@@ -25,7 +25,7 @@
     <li><a routerLink="/contact" (click)="closeMenu()">Contact</a></li>
 
     <!-- Déconnexion -->
-    <li *ngIf="isLoggedIn" class="header__logout" (click)="logout()">
+    <li *ngIf="isLoggedIn()" class="header__logout" (click)="logout()">
       <i class="fa-solid fa-right-from-bracket"></i> Se déconnecter
     </li>
   </ul>
