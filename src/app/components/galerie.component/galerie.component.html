@@ -1,1 +1,92 @@
-<p>galerie.component works!</p>
+<section class="galerie" (keydown)="onKeyDown($event)" tabindex="0">
+  <!-- En-tête -->
+  <header class="galerie__header">
+    <h1 class="galerie__title">🎞️ Galerie Média</h1>
+    @if (!isLoading()) {
+      <div class="galerie__stats">
+        <span>📊 {{ filteredMediasCount() }} / {{ totalMediasCount() }}</span>
+        <span>📸 {{ photosCount() }} photos</span>
+        <span>🎬 {{ videosCount() }} vidéos</span>
+      </div>
+    }
+  </header>
+
+  <!-- Filtres -->
+  <div class="galerie__filters">
+    <button (click)="filterByType('all')" [class.active]="currentFilter().type === 'all'">Tous</button>
+    <button (click)="filterByType('PHOTO')" [class.active]="currentFilter().type === 'PHOTO'">📸 Photos</button>
+    <button (click)="filterByType('VIDEO')" [class.active]="currentFilter().type === 'VIDEO'">🎬 Vidéos</button>
+
+    <input
+      type="text"
+      placeholder="🔍 Rechercher..."
+      [value]="searchTerm()"
+      (input)="updateSearch($event.target.value)"
+      class="galerie__search"
+    />
+
+    <button (click)="resetFilters()" class="galerie__reset">↺ Réinitialiser</button>
+  </div>
+
+  <!-- Loader -->
+  @if (isLoading()) {
+    <div class="galerie__loader">
+      <span class="spinner"></span> Chargement des médias...
+    </div>
+  }
+
+  <!-- Grille -->
+  @if (!isLoading() && filteredMedias().length > 0) {
+    <div class="galerie__grid">
+      @for (media of filteredMedias(); track media.id) {
+        <div class="galerie__card" (click)="openMediaDetail(media)">
+          <div class="galerie__thumb">
+            <img
+              [src]="media.url"
+              [alt]="media.description || media.type"
+              (error)="onImageError($event)"
+              loading="lazy"
+            />
+            <span class="galerie__icon">{{ getTypeIcon(media.type) }}</span>
+          </div>
+          <div class="galerie__info">
+            <h3>{{ media.description || 'Sans description' }}</h3>
+            <small>{{ formatDate(media.dateAjout) }}</small>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Aucun média -->
+  @if (!isLoading() && filteredMedias().length === 0) {
+    <div class="galerie__empty">
+      🚫 Aucun média ne correspond à vos critères.
+    </div>
+  }
+
+  <!-- Vue détaillée -->
+  @if (selectedMedia()) {
+    <div class="galerie__overlay" (click)="closeMediaDetail()">
+      <div class="galerie__detail" (click)="$event.stopPropagation()">
+        <button class="galerie__close" (click)="closeMediaDetail()">✖</button>
+        <h2>{{ selectedMedia()?.description || 'Détail du média' }}</h2>
+        <p>{{ formatDate(selectedMedia()?.dateAjout) }}</p>
+        <div class="galerie__media">
+          @if (isPhoto(selectedMedia()!)) {
+            <img
+              [src]="selectedMedia()?.url"
+              [alt]="selectedMedia()?.description"
+              (error)="onImageError($event)"
+            />
+          } @else {
+            <video controls [src]="selectedMedia()?.url"></video>
+          }
+        </div>
+        <div class="galerie__meta">
+          <span>{{ getTypeLabel(selectedMedia()?.type!) }}</span>
+        </div>
+      </div>
+    </div>
+  }
+</section>

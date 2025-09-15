@@ -1,27 +1,25 @@
-
 <!--Hero-->
 <section class="hero">
   <div class="hero-content">
     <h1>Bienvenue au Club Tong Nooma</h1>
-    <p>Amoureux du sport et des arts martiaux venez decouvrir
+    <p>Amoureux du sport et des arts martiaux venez découvrir
       ce que c'est que le VOVINAM Viet Vo Dao.</p>
-<a href="https://www.facebook.com/share/19ndzFQJrg/?mibextid=wwXIfr" class="cta-btn" target="_blank" rel="noopener noreferrer">
-  rejoignez notre communauté
-  en cliquant ici
-</a>
+    <a href="https://www.facebook.com/share/19ndzFQJrg/?mibextid=wwXIfr" class="cta-btn" target="_blank" rel="noopener noreferrer">
+      Rejoignez notre communauté
+    </a>
   </div>
 </section>
 
 <!--À Propos-->
-<section class="about">
+<section class="about" id="about">
   <div class="about-wrapper">
     <div class="about-img">
-      <img src="/assets/maitre.jpg" alt="Maître Tong Nooma">
+      <img src="/assets/maitre.webp" alt="Maître Tong Nooma">
     </div>
     <div class="about-text">
       <h2>À propos</h2>
       <p>
-        Tong Nooma est bien plus qu’une école d’arts martiaux. C’est une communauté où l’on apprend
+        Tong Nooma est bien plus qu'une école d'arts martiaux. C'est une communauté où l'on apprend
         le respect, la discipline et la maîtrise de soi à travers le VOVINAM Viet Vo Dao.
         Nos cours sont ouverts à tous les niveaux, encadrés par des maîtres passionnés.
       </p>
@@ -30,52 +28,178 @@
   </div>
 </section>
 
-<!--Actualite
-<section class="news">
-  <h2>Actualité</h2>
-  <div class="news-list">
-    <article>
-      <h3>Stage d'été</h3>
-      <p>Rejoignez-nous pour un stage intensif cet été...</p>
-    </article>
-  </div>
+<!-- Section Actualités Intégrée-->
+<section class="news-home" id="news">
+  <h2>Actualités Récentes</h2>
+  
+  @if (isLoadingNews) {
+    <div class="news-loader">
+      <span class="spinner"></span> Chargement des actualités...
+    </div>
+  }
+  
+  @if (!isLoadingNews && recentActualites.length > 0) {
+    <div class="news-preview">
+      @for (actu of recentActualites; track actu.id) {
+        <article class="news-card" (click)="scrollToSection('news-detail-' + actu.id)">
+          @if (actu.imageUrl) {
+            <div class="news-card__image">
+              <img [src]="actu.imageUrl" [alt]="actu.titre" loading="lazy">
+            </div>
+          }
+          <div class="news-card__content">
+            <h3>{{ actu.titre }}</h3>
+            <p>{{ actu.contenu | slice:0:120 }}{{ actu.contenu.length > 120 ? '...' : '' }}</p>
+            <small class="news-date">{{ actu.datePub | date:'dd/MM/yyyy' }}</small>
+          </div>
+        </article>
+      }
+    </div>
+    
+    <div class="news-cta">
+      <button class="cta-btn" routerLink="/news">
+        📰 Voir toutes les actualités
+      </button>
+    </div>
+  }
+  
+  @if (!isLoadingNews && recentActualites.length === 0) {
+    <div class="news-empty">
+      📰 Aucune actualité récente disponible.
+    </div>
+  }
 </section>
--->
 
-
-<!--Horaire-->
-<section class="programs">
-  <h2>Nos Programmes</h2>
+<!--Horaires-->
+<section class="programs" id="programs">
+  <h2>Nos différènts Programmes et Horaires de cours</h2>
   <div class="program-list">
     <div class="program-card">
-      <h3>Séance Enfants</h3>
+      <h3>Séance Enfants Vovinam</h3>
       <p>Mercredi 16h - 18h</p>
       <p>Samedi 16h - 18h</p>
     </div>
     <div class="program-card">
-      <h3>Séance Adultes</h3>
+      <h3>Séance Adultes Vovinam</h3>
       <p>Lundi 18h30 - 20h</p>
       <p>Mardi 18h - 20h</p>
       <p>Jeudi 18h - 20h</p>
       <p>Samedi 16h - 18h</p>
     </div>
+    <div class="program-card">
+      <h3>Musculations</h3>
+      <p>Tous les jours du lundi au vendredi 18h - 20h</p>
+      
+    </div>
+    <div class="program-card">
+      <h3>Aérobic</h3>
+      <p>Lundi 18h - 20h</p>
+      <p>Mercredi 18h - 20h</p>
+      <p>Vendredi 18h - 20h</p>
+    </div>
   </div>
 </section>
 
-<!--Galerie-->
-<section class="gallery">
-  <h2>Galerie</h2>
-  <div class="gallery-grid">
-    <img src="/assets/images/photo1.jpg" alt="Cours">
-    <img src="/assets/images/photo2.jpg" alt="Entraînement">
-  </div>
+<!-- Galerie dynamique 
+
+<section class="galerie" id="gallery" (keydown)="onKeyDown($event)" tabindex="0">
+  <header class="galerie__header">
+    <h2 class="section-title">📸 Galerie Média</h2>
+    @if (!isLoading()) {
+      <div class="galerie__stats">
+        <span>📊 {{ filteredMediasCount() }} / {{ totalMediasCount() }}</span>
+        <span>📸 {{ photosCount() }} photos</span>
+        <span>🎬 {{ videosCount() }} vidéos</span>
+      </div>
+    }
+  </header>-->
+
+  <!-- Filtres 
+  <div class="galerie__filters">
+    <button (click)="filterByType('all')" [class.active]="currentFilter().type === 'all'">Tous</button>
+    <button (click)="filterByType('PHOTO')" [class.active]="currentFilter().type === 'PHOTO'">📸 Photos</button>
+    <button (click)="filterByType('VIDEO')" [class.active]="currentFilter().type === 'VIDEO'">🎬 Vidéos</button>
+
+    <input
+      type="text"
+      placeholder="🔍 Rechercher..."
+      [value]="searchTerm()"
+      (input)="updateSearch($event.target.value)"
+      class="galerie__search"
+    />
+
+    <button (click)="resetFilters()" class="galerie__reset">↺ Réinitialiser</button>
+  </div> -->
+
+  <!-- Loader 
+  @if (isLoading()) {
+    <div class="galerie__loader">
+      <span class="spinner"></span> Chargement des médias...
+    </div>
+  } -->
+
+  <!-- Grille 
+  @if (!isLoading() && filteredMedias().length > 0) {
+    <div class="galerie__grid">
+      @for (media of filteredMedias(); track media.id) {
+        <div class="galerie__card" (click)="openMediaDetail(media)">
+          <div class="galerie__thumb">
+            <img
+              [src]="media.url"
+              [alt]="media.description || media.type"
+              (error)="onImageError($event)"
+              loading="lazy"
+            />
+            <span class="galerie__icon">{{ getTypeIcon(media.type) }}</span>
+          </div>
+          <div class="galerie__info">
+            <h3>{{ media.description || 'Sans description' }}</h3>
+            <small>{{ formatDate(media.dateAjout) }}</small>
+          </div>
+        </div>
+      }
+    </div>
+  }-->
+
+  <!-- Aucun média 
+  @if (!isLoading() && filteredMedias().length === 0) {
+    <div class="galerie__empty">
+      🚫 Aucun média ne correspond à vos critères.
+    </div>
+  } -->
+
+  <!-- Vue détaillée 
+  @if (selectedMedia()) {
+    <div class="galerie__overlay" (click)="closeMediaDetail()">
+      <div class="galerie__detail" (click)="$event.stopPropagation()">
+        <button class="galerie__close" (click)="closeMediaDetail()">✖</button>
+        <h2>{{ selectedMedia()?.description || 'Détail du média' }}</h2>
+        <p>{{ formatDate(selectedMedia()?.dateAjout) }}</p>
+        <div class="galerie__media">
+          @if (isPhoto(selectedMedia()!)) {
+            <img
+              [src]="selectedMedia()?.url"
+              [alt]="selectedMedia()?.description"
+              (error)="onImageError($event)"
+            />
+          } @else {
+            <video controls [src]="selectedMedia()?.url"></video>
+          }
+        </div>
+        <div class="galerie__meta">
+          <span>{{ getTypeLabel(selectedMedia()?.type!) }}</span>
+        </div>
+      </div>
+    </div>
+  }
 </section>
+-->
 
 <!--Contact-->
-<section class="contact">
-  <h2>Contact</h2>  
+<section class="contact" id="contact">
+  <h2 class="section-title">📞 Contact</h2>
+  <div class="contact-info">
+    <p><strong>Téléphone :</strong> <a href="tel:+22670256991">70256991</a> / <a href="tel:+22663629819">63629819</a></p>
+    <p><strong>Email :</strong> <a href="mailto:ouedraogoratasida76@gmail.com">ouedraogoratasida76@gmail.com</a></p>
+  </div>
 </section>
-
-
-
-

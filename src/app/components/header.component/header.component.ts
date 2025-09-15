@@ -1,8 +1,7 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule, NavigationEnd } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { filter, map } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { AuthService } from '../../services/auth-service';
 
 @Component({
@@ -12,26 +11,31 @@ import { AuthService } from '../../services/auth-service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
-
+ 
   menuOpen = false;
   unreadCount = 3;
 
-  // 🔥 Ici on ne garde que NavigationEnd et on map vers son urlAfterRedirects (string)
-  private navigationEnd$ = this.router.events.pipe(
-    filter((event): event is NavigationEnd => event instanceof NavigationEnd),
-    map(event => event.urlAfterRedirects)
-  );
-  private currentUrl = toSignal(this.navigationEnd$, { initialValue: this.router.url });
+  // ✅ Utiliser un signal manuel pour contrôler l'affichage
+  private currentUrl = signal(this.router.url);
 
   showHeader = computed(() => {
-    const url = this.currentUrl() ?? '';
+    const url = this.currentUrl();
     return !['/login', '/register'].some(path => url.startsWith(path));
   });
 
   isLoggedIn = computed(() => this.authService.isAuthenticated());
+
+  ngOnInit() {
+    // ✅ Écouter les changements de navigation et mettre à jour le signal
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe(event => {
+      this.currentUrl.set(event.urlAfterRedirects);
+    });
+  }
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;

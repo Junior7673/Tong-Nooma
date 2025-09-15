@@ -1,0 +1,91 @@
+/* Section globale */
+.programs {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #f9f9f9, #eaeaea);
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  color: #142850;
+}
+
+/* Titre principal */
+.programs h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  position: relative;
+}
+.programs h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: #00b4d8;
+  border-radius: 2px;
+}
+
+/* Grille de cartes */
+.program-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+/* Carte individuelle */
+.program-card {
+  background: white;
+  border-left: 5px solid #142850;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.program-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+/* Titre de séance */
+.program-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+  color: #00b4d8;
+  font-weight: 600;
+}
+
+/* Horaires */
+.program-card p {
+  font-size: 1rem;
+  margin: 6px 0;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .programs {
+    padding: 40px 15px;
+  }
+
+  .programs h2 {
+    font-size: 1.8rem;
+  }
+
+  .program-list {
+    grid-template-columns: 1fr;
+  }
+
+  .program-card {
+    padding: 20px;
+  }
+
+  .program-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .program-card p {
+    font-size: 0.95rem;
+  }
+}

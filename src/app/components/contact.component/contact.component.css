@@ -1,0 +1,17 @@
+.contact-info {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #142850;
+  margin-top: 20px;
+}
+
+.contact-info a {
+  color: #00b4d8;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.contact-info a:hover {
+  color: #0077a8;
+}

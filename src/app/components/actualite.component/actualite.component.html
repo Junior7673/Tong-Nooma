@@ -1,27 +1,56 @@
 <section class="actualites">
   <h2 class="actualites__titre">Actualités</h2>
-
-  <!-- Loader -->
-  @if(isLoading){
-    <div *ngIf="isLoading" class="actualites__loader">
+  
+  <!-- ✅ Loader avec nouvelle syntaxe Angular -->
+  @if (isLoading) {
+    <div class="actualites__loader">
       <span class="spinner"></span> Chargement...
     </div>
   }
-  <!-- Liste -->
-  <div class="actualites__liste" *ngIf="!isLoading && actualites.length > 0">
-    <article class="actualites__item" *ngFor="let actu of actualites">
-      <img *ngIf="actu.imageUrl" [src]="actu.imageUrl" alt="{{ actu.titre }}" class="actualites__image" />
-      <h3 class="actualites__sous-titre">{{ actu.titre }}</h3>
-      <p class="actualites__contenu">{{ actu.contenu }}</p>
-      <small class="actualites__meta">
-        Publié le {{ actu.datePub | date:'longDate' }}
-        <span *ngIf="actu.auteurId">par {{ actu.auteurId }}</span>
-      </small>
-    </article>
-  </div>
-
-  <!-- Message vide -->
-  <div *ngIf="!isLoading && actualites.length === 0" class="actualites__vide">
-    Aucune actualité disponible.
-  </div>
+  
+  <!-- ✅ Liste des actualités -->
+  @if (!isLoading && actualites.length > 0) {
+    <div class="actualites__liste">
+      @for (actu of actualites; track actu.id) {
+        <article class="actualites__item">
+          
+          <!-- ✅ Container d'image avec aspect ratio -->
+          @if (actu.imageUrl) {
+            <div class="actualites__image-container">
+              <img 
+                [src]="actu.imageUrl" 
+                [alt]="actu.titre"
+                class="actualites__image"
+                (error)="onImageError($event)"
+                loading="lazy" />
+            </div>
+          } @else {
+            <!-- ✅ Placeholder si pas d'image -->
+            <div class="actualites__image-placeholder">
+              <span>📰</span>
+            </div>
+          }
+          
+          <!-- ✅ Contenu structuré -->
+          <div class="actualites__content">
+            <h3 class="actualites__sous-titre">{{ actu.titre }}</h3>
+            <p class="actualites__contenu">{{ actu.contenu }}</p>
+            <small class="actualites__meta">
+              Publié le {{ actu.datePub | date:'longDate':'fr' }}
+              @if (actu.auteurId) {
+                <span> par {{ actu.auteurId }}</span>
+              }
+            </small>
+          </div>
+        </article>
+      }
+    </div>
+  }
+  
+  <!-- ✅ Message vide -->
+  @if (!isLoading && actualites.length === 0) {
+    <div class="actualites__vide">
+      📰 Aucune actualité disponible pour le moment.
+    </div>
+  }
 </section>

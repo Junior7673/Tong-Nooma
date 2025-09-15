@@ -1,18 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Actualite } from '../interfaces/ActualiteInterface';
-import { Observable } from 'rxjs/internal/Observable';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class ActualiteService {
-
-  private baseUrl = 'http://localhost:8080/actualite';
-
-  constructor( private http: HttpClient){}
-
-  getAll(): Promise<Actualite[]> {
+  /*getAll(): Promise<Actualite[]> {
     return new Promise<Actualite[]>((resolve, reject) => {
       
       this.http.get<Actualite[]>(this.baseUrl).subscribe(
@@ -24,6 +11,24 @@ export class ActualiteService {
         }
       )
     });
+  }*/
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Actualite } from '../interfaces/ActualiteInterface';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ActualiteService {
+  private baseUrl = 'http://localhost:8080/actualite';
+  
+  constructor(private http: HttpClient) {}
+
+  // ✅ Retourner directement l'Observable
+  getAll(): Observable<Actualite[]> {
+    return this.http.get<Actualite[]>(this.baseUrl);
   }
 
   getById(id: number): Observable<Actualite> {
@@ -41,5 +46,4 @@ export class ActualiteService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
-  
 }

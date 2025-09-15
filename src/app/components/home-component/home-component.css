@@ -1,5 +1,3 @@
-
-
 /* ===== HERO ===== */
 .hero {
   position: relative;
@@ -7,6 +5,7 @@
   color: white;
   text-align: center;
   padding: 150px 30px;
+  scroll-margin-top: 80px; /* ✅ Pour la navigation fluide */
 }
 .hero::before {
   content: "";
@@ -29,25 +28,27 @@
   margin-bottom: 30px;
 }
 .cta-btn {
-  background-color: rgba(76, 89, 227, 0.3); /* bleu clair avec 30% d’opacité */
+  background-color: rgba(76, 89, 227, 0.3);
   padding: 14px 28px;
   border-radius: 30px;
   text-decoration: none;
   color: #ebecee;
   font-weight: bold;
-  backdrop-filter: blur(4px); /* effet verre dépoli */
+  backdrop-filter: blur(4px);
   transition: background 0.3s ease, transform 0.2s ease;
-  border: 1px solid rgba(76, 89, 227, 0.5); /* contour léger */
+  border: 1px solid rgba(76, 89, 227, 0.5);
+  cursor: pointer;
+  display: inline-block;
 }
 .cta-btn:hover {
-  background-color: rgba(76, 89, 227, 0.5); /* un peu plus opaque au survol */
+  background-color: rgba(76, 89, 227, 0.5);
   transform: translateY(-2px);
 }
-
 
 /* ===== SECTION STYLES ===== */
 section {
   padding: 60px 20px;
+  scroll-margin-top: 80px; /* ✅ Pour la navigation fluide */
 }
 section h2 {
   text-align: center;
@@ -55,6 +56,7 @@ section h2 {
   margin-bottom: 30px;
   color: #142850;
 }
+
 /* ===== ABOUT ===== */
 .about {
   background-color: #f0f4ff;
@@ -76,7 +78,6 @@ section h2 {
   flex: 1;
   min-width: 400px;
   max-width: 700px;
-
 }
 .about-img img {
   width: 100%;
@@ -94,6 +95,7 @@ section h2 {
   font-size: 2.2rem;
   margin-bottom: 20px;
   color: #142850;
+  text-align: left;
 }
 .about-text p {
   font-size: 1.1rem;
@@ -116,105 +118,269 @@ section h2 {
   transform: translateY(-2px);
 }
 
+/* ===== ✅ ACTUALITÉS HOME SECTION ===== */
+.news-home {
+  background-color: #f9f9f9;
+  padding: 80px 20px;
+}
 
-.about-wrapper {
+.news-home h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 40px;
+  color: #142850;
+}
+
+/* Loader pour actualités */
+.news-loader {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #555;
+  margin: 40px 0;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   justify-content: center;
-  gap: 40px;
+  align-items: center;
+  gap: 8px;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #ccc;
+  border-top-color: #142850;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Grille des actualités récentes */
+.news-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
   max-width: 1200px;
-  margin: auto;
+  margin: 0 auto 40px;
 }
 
-.about-img {
-  flex: 1;
-  min-width: 400px;
-  max-width: 800px;
-
+/* Carte d'actualité */
+.news-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border-left: 4px solid #142850;
 }
-.about-img img {
+
+.news-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+.news-card__image {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+}
+
+.news-card__image img {
   width: 100%;
   height: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
-.about-text {
-  flex: 1;
-  min-width: 280px;
-  max-width: 600px;
+.news-card:hover .news-card__image img {
+  transform: scale(1.05);
 }
-.about-text h2 {
-  font-size: 2.2rem;
-  margin-bottom: 20px;
+
+.news-card__content {
+  padding: 20px;
+}
+
+.news-card__content h3 {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
   color: #142850;
+  line-height: 1.4;
 }
-.about-text p {
-  font-size: 1.1rem;
-  margin-bottom: 30px;
-  color: #333;
+
+.news-card__content p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 15px;
 }
-.about-text .cta-btn {
+
+.news-date {
+  font-size: 0.9rem;
+  color: #777;
+  font-weight: 500;
+}
+
+/* Bouton CTA pour voir toutes les actualités */
+.news-cta {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.news-cta .cta-btn {
   background-color: rgba(76, 89, 227, 0.3);
   color: #142850;
   border: 1px solid rgba(76, 89, 227, 0.5);
-  padding: 12px 24px;
+  padding: 14px 28px;
   border-radius: 30px;
-  text-decoration: none;
   font-weight: bold;
   backdrop-filter: blur(4px);
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
 }
-.about-text .cta-btn:hover {
+
+.news-cta .cta-btn:hover {
   background-color: rgba(76, 89, 227, 0.5);
   transform: translateY(-2px);
 }
 
-/* ===== NEWS ===== */
-.news-list article {
-  max-width: 600px;
-  margin: auto;
-  background: #fff;
-  padding: 20px;
-  border-left: 4px solid #142850;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+/* Message vide */
+.news-empty {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #777;
+  margin: 40px 0;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 /* ===== PROGRAMS ===== */
-.program-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-.program-card {
-  background: #142850;
-  color: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 250px;
-  text-align: center;
-  transition: transform 0.2s ease;
-}
-.program-card:hover {
-  transform: scale(1.03);
+.programs {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #f9f9f9, #eaeaea);
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  color: #142850;
 }
 
+/* Titre principal */
+.programs h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  position: relative;
+}
+.programs h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: #00b4d8;
+  border-radius: 2px;
+}
+
+/* Grille de cartes */
+.program-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+/* Carte individuelle */
+.program-card {
+  background: white;
+  border-left: 5px solid #142850;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.program-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+/* Titre de séance */
+.program-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+  color: #00b4d8;
+  font-weight: 600;
+}
+
+/* Horaires */
+.program-card p {
+  font-size: 1rem;
+  margin: 6px 0;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .programs {
+    padding: 40px 15px;
+  }
+
+  .programs h2 {
+    font-size: 1.8rem;
+  }
+
+  .program-list {
+    grid-template-columns: 1fr;
+  }
+
+  .program-card {
+    padding: 20px;
+  }
+
+  .program-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .program-card p {
+    font-size: 0.95rem;
+  }
+}
+
+
 /* ===== GALLERY ===== */
+.gallery {
+  background-color: #f9f9f9;
+}
+
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
+
 .gallery-grid img {
   width: 100%;
-  border-radius: 10px;
+  height: 200px;
+  border-radius: 12px;
   object-fit: cover;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.02);
 }
 
 /* ===== CONTACT ===== */
+.contact {
+  background-color: white;
+}
+
 .contact form {
   max-width: 600px;
   margin: auto;
@@ -222,23 +388,89 @@ section h2 {
   flex-direction: column;
   gap: 15px;
 }
+
 .contact input,
 .contact textarea {
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 1rem;
+  transition: border-color 0.3s ease;
 }
+
+.contact input:focus,
+.contact textarea:focus {
+  outline: none;
+  border-color: #142850;
+}
+
 .contact button {
   background: #142850;
   color: white;
-  padding: 12px;
+  padding: 14px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
   transition: background 0.3s ease;
+  font-size: 1rem;
 }
+
 .contact button:hover {
   background: #0e1f3a;
 }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .hero {
+    padding: 120px 20px;
+  }
+  
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+  
+  .about-wrapper {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .about-img {
+    min-width: auto;
+  }
+  
+  .news-preview {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .program-list {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  section {
+    padding: 40px 15px;
+  }
+  
+  section h2 {
+    font-size: 1.6rem;
+  }
+  
+  .news-card__content {
+    padding: 15px;
+  }
+  
+  .cta-btn {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+
