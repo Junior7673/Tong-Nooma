@@ -4,26 +4,24 @@
   background-color: #f9f9f9;
 }
 
-/* Titre principal amélioré */
+/* Titre */
 .actualites__titre {
-  font-family: 'Poppins', 'Segoe UI', sans-serif; /* Police moderne et élégante */
-  font-size: 2.4rem; /* Légèrement plus grand */
-  font-weight: 700; /* Gras pour l'impact */
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 700;
   text-align: center;
   color: #142850;
   margin-bottom: 30px;
-  letter-spacing: 1px; /* Espacement des lettres pour l'élégance */
-  position: center;
+  letter-spacing: 1px;
+  position: relative;
   display: inline-block;
-  padding-bottom: 10px;
 }
 
-/* Ligne décorative sous le titre */
 .actualites__titre::after {
   content: '';
   position: absolute;
   left: 50%;
-  bottom: 0;
+  bottom: -5px;
   transform: translateX(-50%);
   width: 60px;
   height: 4px;
@@ -31,24 +29,69 @@
   border-radius: 2px;
 }
 
-/* Effet d'apparition */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ✅ Actions */
+.actualites__actions {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.actualites__titre {
-  animation: fadeInDown 0.6s ease forwards;
+.btn-ajout {
+  background: #142850;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-ajout:hover {
+  background: #00b4d8;
 }
 
+/* ✅ Formulaire d’ajout */
+.actu-form {
+  max-width: 600px;
+  margin: 0 auto 30px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
 
-/* Loader */
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: block;
+  color: #142850;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.btn-valider {
+  background: #00b4d8;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  align-self: flex-end;
+  transition: 0.3s;
+}
+.btn-valider:hover {
+  background: #142850;
+}
+
+/* ✅ Loader */
 .actualites__loader {
   text-align: center;
   font-size: 1.1rem;
@@ -60,7 +103,6 @@
   gap: 8px;
 }
 
-/* Animation spinner */
 .spinner {
   width: 18px;
   height: 18px;
@@ -70,18 +112,15 @@
   animation: spin 0.8s linear infinite;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-/* Grille responsive */
+/* ✅ Liste d’actualités */
 .actualites__liste {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
 }
 
-/* Carte d'actualité */
 .actualites__item {
   background: #fff;
   padding: 20px;
@@ -90,38 +129,42 @@
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* ✅ Pour éviter le débordement d'image */
+  overflow: hidden;
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.actualites__item:nth-child(1) { animation-delay: 0.1s; }
+.actualites__item:nth-child(2) { animation-delay: 0.2s; }
+.actualites__item:nth-child(3) { animation-delay: 0.3s; }
+.actualites__item:nth-child(n+4) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ✅ Container d'image avec aspect ratio fixe */
+/* ✅ Images */
 .actualites__image-container {
   width: 100%;
   aspect-ratio: 16/9;
   overflow: hidden;
   border-radius: 8px;
   margin-bottom: 15px;
-  background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
 }
-
-/* ✅ Image optimisée */
 .actualites__image {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover; /* 🔄 remplacé contain par cover */
   transition: transform 0.3s ease;
 }
-
-/* ✅ Effet hover sur l'image */
 .actualites__item:hover .actualites__image {
   transform: scale(1.05);
 }
 
-/* ✅ Placeholder pour images manquantes */
 .actualites__image-placeholder {
   width: 100%;
   aspect-ratio: 16/9;
-  background: linear-gradient(135deg, #e8e8e8, #d8d8d8);
+  background: #eee;
   border-radius: 8px;
   margin-bottom: 15px;
   display: flex;
@@ -131,46 +174,38 @@
   color: #999;
 }
 
-/* ✅ Container du contenu */
+/* ✅ Texte */
 .actualites__content {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
-
-/* Sous-titre */
 .actualites__sous-titre {
   font-size: 1.2rem;
   margin-bottom: 10px;
   color: #142850;
-  line-height: 1.3;
   font-weight: 600;
 }
-
-/* Contenu */
 .actualites__contenu {
   flex-grow: 1;
   font-size: 1rem;
   line-height: 1.6;
   color: #333;
   margin-bottom: 15px;
-  /* ✅ Limitation du texte si trop long */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
-/* Meta infos */
 .actualites__meta {
   font-size: 0.9rem;
   color: #777;
-  margin-top: auto; /* ✅ Pousse les meta en bas */
+  margin-top: auto;
   padding-top: 10px;
   border-top: 1px solid #f0f0f0;
 }
 
-/* Message vide */
+/* ✅ Message vide */
 .actualites__vide {
   text-align: center;
   font-size: 1.1rem;
@@ -182,63 +217,9 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-/* ✅ Animation d'apparition pour les cartes */
-.actualites__item {
-  animation: fadeInUp 0.6s ease forwards;
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.actualites__item:nth-child(1) { animation-delay: 0.1s; }
-.actualites__item:nth-child(2) { animation-delay: 0.2s; }
-.actualites__item:nth-child(3) { animation-delay: 0.3s; }
-.actualites__item:nth-child(n+4) { animation-delay: 0.4s; }
-
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Responsive */
 @media (max-width: 768px) {
-  .actualites {
-    padding: 40px 15px;
-  }
-  
-  .actualites__titre {
-    font-size: 1.5rem;
-  }
-  
-  .actualites__liste {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
-  
-  .actualites__item {
-    padding: 15px;
-  }
-  
-  .actualites__image-container {
-    aspect-ratio: 4/3; /* ✅ Format plus carré sur mobile */
-  }
-  
-  .actualites__sous-titre {
-    font-size: 1.1rem;
-  }
-  
-  .actualites__contenu {
-    font-size: 0.95rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .actualites {
-    padding: 30px 10px;
-  }
-  
-  .actualites__image-placeholder {
-    font-size: 2rem;
-  }
+  .actualites__titre { font-size: 1.8rem; }
+  .actualites__liste { grid-template-columns: 1fr; }
+  .actualites__item { padding: 15px; }
 }

@@ -1,0 +1,50 @@
+<section class="actualites">
+  <h2 class="actualites__titre">Actualités</h2>
+
+  <!-- Bouton Ajouter (admin uniquement) -->
+  <div class="actualites__actions" *ngIf="isAdmin()">
+    <button class="btn-ajout" (click)="goToAdd()">➕ Ajouter une actualité</button>
+  </div>
+
+  <!-- Loader -->
+  <div class="actualites__loader" *ngIf="isLoading">
+    <span class="spinner"></span> Chargement...
+  </div>
+
+  <!-- Liste -->
+  <div class="actualites__liste" *ngIf="!isLoading && actualites.length > 0">
+    <article class="actualites__item" *ngFor="let actu of actualites; trackBy: trackById">
+      
+      <div class="actualites__image-container" *ngIf="actu.imageUrl; else placeholder">
+        <img [src]="actu.imageUrl"
+             [alt]="actu.titre"
+             class="actualites__image"
+             (error)="onImageError($event)"
+             loading="lazy" />
+      </div>
+      <ng-template #placeholder>
+        <div class="actualites__image-placeholder">📰</div>
+      </ng-template>
+
+      <div class="actualites__content">
+        <h3 class="actualites__sous-titre">{{ actu.titre }}</h3>
+        <p class="actualites__contenu">{{ actu.contenu }}</p>
+        <small class="actualites__meta">
+          Publié le {{ actu.datePub | date:'longDate':'fr' }}
+          <span *ngIf="actu.auteurId"> par {{ actu.auteurId }}</span>
+        </small>
+      </div>
+
+      <!-- Actions Admin -->
+      <div class="actualites__admin-actions" *ngIf="isAdmin()">
+        <button class="btn-edit" (click)="goToEdit(actu.id)">✏️ Modifier</button>
+        <button class="btn-delete" (click)="deleteActualite(actu.id)">🗑 Supprimer</button>
+      </div>
+    </article>
+  </div>
+
+  <!-- Message vide -->
+  <div class="actualites__vide" *ngIf="!isLoading && actualites.length === 0">
+    📰 Aucune actualité disponible pour le moment.
+  </div>
+</section>

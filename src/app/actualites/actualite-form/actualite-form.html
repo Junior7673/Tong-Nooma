@@ -1,0 +1,41 @@
+<section class="form-container" id="actualite-form">
+  <h2>{{ isEditMode ? '✏️ Modifier une actualité' : '➕ Ajouter une actualité' }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- Titre -->
+    <div class="form-group">
+      <label for="titre">Titre</label>
+      <input id="titre" formControlName="titre" type="text" />
+      <small *ngIf="form.get('titre')?.invalid && form.get('titre')?.touched">
+        ⚠️ Le titre est obligatoire (min 3 caractères).
+      </small>
+    </div>
+
+    <!-- Contenu -->
+    <div class="form-group">
+      <label for="contenu">Contenu</label>
+      <textarea id="contenu" formControlName="contenu" rows="4"></textarea>
+      <small *ngIf="form.get('contenu')?.invalid && form.get('contenu')?.touched">
+        ⚠️ Le contenu est obligatoire (min 10 caractères).
+      </small>
+    </div>
+
+    <!-- Image -->
+    <div class="form-group">
+      <label for="image">Image</label>
+      <input id="image" type="file" (change)="onFileSelected($event)" />
+      <div class="image-preview" *ngIf="previewUrl">
+        <p>Prévisualisation :</p>
+        <img [src]="previewUrl" alt="Preview" class="preview" />
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <button type="submit" [disabled]="form.invalid">
+        {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
+      </button>
+      <button type="button" (click)="cancel()">Annuler</button>
+    </div>
+  </form>
+</section>

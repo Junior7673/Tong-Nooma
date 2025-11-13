@@ -1,0 +1,16 @@
+<section *ngIf="actu" class="detail-container" id="">
+  <h2>{{ actu.titre }}</h2>
+  <p class="date">🗓️ Publié le : {{ actu.datePub | date:'medium' }}</p>
+
+  <div *ngIf="actu.imageUrl" class="image-container">
+    <img [src]="actu.imageUrl" alt="{{ actu.titre }}" />
+  </div>
+
+  <p class="contenu">{{ actu.contenu }}</p>
+
+  <button (click)="backToList()">⬅️ Retour à la liste</button>
+</section>
+
+<section *ngIf="!actu">
+  <p>⚠️ Aucune actualité trouvée.</p>
+</section>

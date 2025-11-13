@@ -1,56 +1,75 @@
 <section class="actualites">
   <h2 class="actualites__titre">Actualités</h2>
-  
-  <!-- ✅ Loader avec nouvelle syntaxe Angular -->
-  @if (isLoading) {
-    <div class="actualites__loader">
-      <span class="spinner"></span> Chargement...
+
+  <!-- Bouton pour afficher le formulaire d’ajout (admin uniquement) 
+  <div class="actualites__actions" *ngIf="isAdmin()">
+    <button class="btn-ajout" (click)="showForm = !showForm" type="button">
+      {{ showForm ? 'Fermer' : '➕ Ajouter une actualité' }}
+    </button>
+  </div>
+
+   Formulaire d’ajout 
+  <form *ngIf="showForm && isAdmin()" [formGroup]="actuForm" (ngSubmit)="onSubmit()" class="actu-form" novalidate>
+    <div class="form-group">
+      <label for="titre">Titre</label>
+      <input id="titre" type="text" formControlName="titre" placeholder="Titre de l’actualité" />
+      <small class="error" *ngIf="isInvalidControl('titre')">Le titre est requis.</small>
     </div>
-  }
-  
-  <!-- ✅ Liste des actualités -->
-  @if (!isLoading && actualites.length > 0) {
-    <div class="actualites__liste">
-      @for (actu of actualites; track actu.id) {
-        <article class="actualites__item">
-          
-          <!-- ✅ Container d'image avec aspect ratio -->
-          @if (actu.imageUrl) {
-            <div class="actualites__image-container">
-              <img 
-                [src]="actu.imageUrl" 
-                [alt]="actu.titre"
-                class="actualites__image"
-                (error)="onImageError($event)"
-                loading="lazy" />
-            </div>
-          } @else {
-            <!-- ✅ Placeholder si pas d'image -->
-            <div class="actualites__image-placeholder">
-              <span>📰</span>
-            </div>
-          }
-          
-          <!-- ✅ Contenu structuré -->
-          <div class="actualites__content">
-            <h3 class="actualites__sous-titre">{{ actu.titre }}</h3>
-            <p class="actualites__contenu">{{ actu.contenu }}</p>
-            <small class="actualites__meta">
-              Publié le {{ actu.datePub | date:'longDate':'fr' }}
-              @if (actu.auteurId) {
-                <span> par {{ actu.auteurId }}</span>
-              }
-            </small>
-          </div>
-        </article>
-      }
+
+    <div class="form-group">
+      <label for="contenu">Contenu</label>
+      <textarea id="contenu" formControlName="contenu" placeholder="Contenu de l’actualité"></textarea>
+      <small class="error" *ngIf="isInvalidControl('contenu')">
+        Le contenu est requis (min. 10 caractères).
+      </small>
     </div>
-  }
-  
-  <!-- ✅ Message vide -->
-  @if (!isLoading && actualites.length === 0) {
-    <div class="actualites__vide">
-      📰 Aucune actualité disponible pour le moment.
+
+    <div class="form-group">
+      <label for="image">Image</label>
+      <input id="image" type="file" (change)="onFileSelected($event)" accept="image/*" />
     </div>
-  }
+
+    <button
+      type="submit"
+      class="btn-valider"
+      [disabled]="isSubmitting || actuForm.invalid"
+      aria-disabled="{{ isSubmitting || actuForm.invalid }}"
+    >
+      <span *ngIf="!isSubmitting">✅ Publier</span>
+      <span *ngIf="isSubmitting">Envoi…</span>
+    </button>
+  </form> -->
+
+  <!-- Loader -->
+  <div class="actualites__loader" *ngIf="isLoading">
+    <span class="spinner"></span> Chargement...
+  </div>
+
+  <!-- Liste -->
+  <div class="actualites__liste" *ngIf="!isLoading ">
+    <article class="actualites__item" *ngFor="let actu of actualites; trackBy: trackById">
+      <div class="actualites__image-container" *ngIf="actu.imageUrl; else placeholder">
+        <img [src]="actu.imageUrl" [alt]="actu.titre" class="actualites__image"
+             (error)="onImageError($event)"
+             loading="lazy" />
+      </div>
+      <ng-template #placeholder>
+        <div class="actualites__image-placeholder">📰</div>
+      </ng-template>
+
+      <div class="actualites__content">
+        <h3 class="actualites__sous-titre">{{ actu.titre }}</h3>
+        <p class="actualites__contenu">{{ actu.contenu }}</p>
+        <small class="actualites__meta">
+          Publié le {{ actu.datePub | date:'longDate':'fr' }}
+          <span *ngIf="actu.auteurId"> par {{ actu.auteurId }}</span>
+        </small>
+      </div>
+    </article>
+  </div>
+
+  <!-- Message vide -->
+  <div class="actualites__vide" *ngIf="!isLoading && (!actualites || actualites.length === 0)">
+    📰 Aucune actualité disponible pour le moment.
+  </div>
 </section>

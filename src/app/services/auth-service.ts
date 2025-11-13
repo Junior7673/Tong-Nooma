@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { LoginInterface } from '../interfaces/LoginInterface';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { LoginResponse } from '../interfaces/LoginResponse';
 import { isPlatformBrowser } from '@angular/common';
+import { LoginInterface } from '../interfaces/LoginInterface';
+import { LoginResponse } from '../interfaces/LoginResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -11,20 +11,19 @@ import { isPlatformBrowser } from '@angular/common';
 export class AuthService {
   private apiUrl = 'http://localhost:8080/auth';
 
-  constructor(private http: HttpClient,
-              @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
+  // 🔑 Connexion
   login(credentials: LoginInterface): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
         if (isPlatformBrowser(this.platformId)) {
           localStorage.setItem('token', response.token);
-          if (response.role) {
-            localStorage.setItem('role', response.role);
-          }
-          if (response.expiresAt) {
-            localStorage.setItem('expiresAt', response.expiresAt.toString());
-          }
+          localStorage.setItem('role', response.role ?? '');
+          localStorage.setItem('expiresAt', response.expiresAt.toString());
           this.scheduleAutoLogout();
         }
       }),
@@ -32,20 +31,31 @@ export class AuthService {
     );
   }
 
-  register(newUser: LoginInterface): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, newUser).pipe(
+  // 👤 Inscription (ajoute aussi expiresAt si le backend l’envoie)
+  register(newUser: LoginInterface): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/register`, newUser).pipe(
+      tap(response => {
+        if (isPlatformBrowser(this.platformId)) {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('role', response.role ?? '');
+          localStorage.setItem('expiresAt', response.expiresAt.toString());
+          this.scheduleAutoLogout();
+        }
+      }),
       catchError(err => throwError(() => err))
     );
   }
 
+  // 🚪 Déconnexion
   logout() {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('token');
       localStorage.removeItem('role');
-      localStorage.removeItem('expiresAt'); // ✅
+      localStorage.removeItem('expiresAt');
     }
   }
 
+  // ✅ Vérifie si le token est encore valide
   isAuthenticated(): boolean {
     if (!isPlatformBrowser(this.platformId)) return false;
     const token = localStorage.getItem('token');
@@ -54,6 +64,7 @@ export class AuthService {
     return Date.now() < parseInt(expiresAt, 10);
   }
 
+  // 🎭 Rôle utilisateur
   getUserRole(): string {
     return localStorage.getItem('role') ?? '';
   }
@@ -62,6 +73,7 @@ export class AuthService {
     return this.getUserRole() === 'ADMIN';
   }
 
+  // ⏳ Déconnexion automatique
   private scheduleAutoLogout() {
     const expiresAt = localStorage.getItem('expiresAt');
     if (!expiresAt) return;
