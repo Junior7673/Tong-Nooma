@@ -23,6 +23,7 @@ export class ActualiteComponent implements OnInit, OnDestroy {
   actualites: Actualite[] = [];
   isLoading = false;
   isSubmitting = false;
+  
 
   actuForm!: FormGroup;
   showForm = false;
